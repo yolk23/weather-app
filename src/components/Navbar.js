@@ -9,8 +9,6 @@ const Navbar = () => {
         <ul className="navbar-list">
           <li>Today</li>
           <li>Week</li>
-
-          <li></li>
         </ul>
       </div>
     </div>

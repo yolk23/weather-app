@@ -1,0 +1,33 @@
+.wrapper {
+  display: grid;
+  background-color: #eee;
+  grid-template-areas:
+    "date chart chart chart chart chart"
+    "date chart chart chart chart chart "
+    "date current current current current current";
+  gap: 10px;
+  color: white;
+  background-color: #bccef8;
+  padding: 10px;
+}
+
+.wrapper > div {
+  background-color: #98a8f8;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+.date {
+  grid-area: date;
+  height: 40vh;
+}
+.chart {
+  grid-area: chart;
+}
+.current {
+  grid-area: current;
+}
+
+* {
+  margin: 0px;
+}
