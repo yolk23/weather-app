@@ -11,3 +11,12 @@ export const getCurrentDate = () => {
 
   return new Date().toLocaleString("en-US", options);
 };
+
+export const getCurrentHour = () => {
+  const options = {
+    hour: "numeric", // Numeric hour (e.g., "5")
+    hour12: false,
+  };
+
+  return new Date().toLocaleString("en-US", options).replace("PM", "");
+};

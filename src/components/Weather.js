@@ -1,44 +1,102 @@
 import React from "react";
 import "../stylings/Weather.css";
-import { getCurrentDate } from "./utils";
+import { getCurrentDate, getCurrentHour } from "./utils";
 import { useState, useEffect, useCallback } from "react";
+import cloud from "../weather-icons/cloud.svg";
+import sun from "../weather-icons/sun.svg";
+import cloudRain from "../weather-icons/cloud-rain.svg";
+import cloudLightning from "../weather-icons/cloud-lightning.svg";
+import TempChart from "./TempChart.js";
+
 const Weather = () => {
   const [weatherData, setWeatherData] = useState("");
-  const [icon, setIcon] = useState("");
-  const url =
-    "https://api.open-meteo.com/v1/forecast?latitude=14.60&longitude=120.98&hourly=temperature_2m&hourly=weather_code";
+  const [weatherState, setWeatherState] = useState(0);
 
-  const fetchData = useCallback(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        setWeatherData(data);
-        console.log(data);
-      })
-      .catch((error) => console.log(error));
+  const url =
+    "https://api.open-meteo.com/v1/forecast?latitude=14.60&longitude=120.98&hourly=temperature_2m&hourly=weather_code&hourly=relative_humidity_2m";
+
+  //Fetching API
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      setWeatherData(data);
+      if (data) {
+        setWeatherState(
+          weatherData.hourly.weather_code[
+            weatherData.hourly.weather_code.length - 1
+          ]
+        );
+      }
+      console.log(weatherState);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   }, [url]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
+  //Rendering Icons
+  const renderIcon = () => {
+    switch (weatherState) {
+      case 0:
+        return <img src={sun} alt="Sun" />;
+      case 1:
+      case 2:
+      case 3:
+        return <img src={cloud} alt="Cloud" />;
+      case 51:
+      case 53:
+      case 55:
+      case 56:
+      case 57:
+        return <img src={cloudRain} alt="Cloud Rain" />;
+      case 95:
+      case 96:
+      case 99:
+        return <img src={cloudLightning} alt=" Lightning Cloud" />;
+      default:
+        return <h1>Error</h1>;
+    }
+  };
+
   return (
     <div class="wrapper">
-      <div class="date">
+      <div class="date" style={{ border: "solid" }}>
         <h4>Right now in Philippines, MNL</h4>
-        {/* <h6>Status:{weatherData.hourly.temperature_2m[0]}</h6> */}
+        <h6>
+          Temperature:
+          {weatherData &&
+            weatherData.hourly.temperature_2m[
+              weatherData.hourly.temperature_2m.length - 1
+            ]}
+        </h6>
         {getCurrentDate()}
-        <h2>
-          Current Weather:
-          {
-            weatherData.hourly.weather_code[
-              weatherData.hourly.weather_code.length - 1
-            ]
-          }
-        </h2>
+        {Number(getCurrentHour())}
+        <div>{weatherData && renderIcon()}</div>
+        <h2>Current Weather:</h2>
+        <h6>
+          Humidity:
+          {weatherData &&
+            weatherData.hourly.relative_humidity_2m[
+              Number(getCurrentHour())
+            ]}{" "}
+          %
+        </h6>
       </div>
-      <div class="chart">Chart</div>
-      <div class="current">Current</div>
+
+      <div class="chart">
+        <TempChart data={weatherData} />
+      </div>
+
+      <div class="nextDay1"></div>
+      <div class="nextDay2"></div>
+      <div class="nextDay3"></div>
+      <div class="nextDay4"></div>
+      <div class="nextDay5"></div>
     </div>
   );
 };
