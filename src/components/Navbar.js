@@ -1,6 +1,5 @@
 import React from "react";
 import "../stylings/Navbar.css";
-import icon from "../images/icon.png";
 
 const Navbar = () => {
   return (

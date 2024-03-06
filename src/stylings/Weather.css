@@ -4,7 +4,7 @@
   grid-template-areas:
     "date chart chart chart chart chart"
     "date chart chart chart chart chart "
-    "date current current current current current";
+    "date nextDay1 nextDay2 nextDay3 nextDay4 nextDay5";
   gap: 10px;
   color: white;
   background-color: #bccef8;
@@ -27,7 +27,21 @@
 .current {
   grid-area: current;
 }
-
+.nextDay1 {
+  grid-area: nextDay1;
+}
+.nextDay2 {
+  grid-area: nextDay2;
+}
+.nextDay3 {
+  grid-area: nextDay3;
+}
+.nextDay4 {
+  grid-area: nextDay4;
+}
+.nextDay5 {
+  grid-area: nextDay5;
+}
 * {
   margin: 0px;
 }
