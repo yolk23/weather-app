@@ -7,12 +7,12 @@
     "date nextDay1 nextDay2 nextDay3 nextDay4 nextDay5";
   gap: 10px;
   color: white;
-  background-color: #bccef8;
   padding: 10px;
+  background-color: #7286d3;
 }
 
 .wrapper > div {
-  background-color: #98a8f8;
+  background-color: #8ea7e9;
   text-align: center;
   padding: 20px 0;
   font-size: 30px;
@@ -44,4 +44,6 @@
 }
 * {
   margin: 0px;
+
+  font-family: sans-serif;
 }
