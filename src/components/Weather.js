@@ -22,11 +22,7 @@ const Weather = () => {
       const data = await response.json();
       setWeatherData(data);
       if (data) {
-        setWeatherState(
-          weatherData.hourly.weather_code[
-            weatherData.hourly.weather_code.length - 1
-          ]
-        );
+        setWeatherState(weatherData.hourly.weather_code[getCurrentHour() - 1]);
       }
       console.log(weatherState);
       console.log(data);
@@ -63,6 +59,29 @@ const Weather = () => {
     }
   };
 
+  function handleIcon(input) {
+    switch (input) {
+      case 0:
+        return <img src={sun} alt="Sun" />;
+      case 1:
+      case 2:
+      case 3:
+        return <img src={cloud} alt="Cloud" />;
+      case 51:
+      case 53:
+      case 55:
+      case 56:
+      case 57:
+        return <img src={cloudRain} alt="Cloud Rain" />;
+      case 95:
+      case 96:
+      case 99:
+        return <img src={cloudLightning} alt=" Lightning Cloud" />;
+      default:
+        return <h1>Error</h1>;
+    }
+  }
+
   return (
     <div class="wrapper">
       <div class="date" style={{ border: "solid" }}>
@@ -70,20 +89,16 @@ const Weather = () => {
         <h6>
           Temperature:
           {weatherData &&
-            weatherData.hourly.temperature_2m[
-              weatherData.hourly.temperature_2m.length - 1
-            ]}
+            weatherData.hourly.temperature_2m[getCurrentHour() - 1]}
         </h6>
         {getCurrentDate()}
-        {Number(getCurrentHour())}
-        <div>{weatherData && renderIcon()}</div>
+
+        <div>{weatherData && handleIcon(weatherState)}</div>
         <h2>Current Weather:</h2>
         <h6>
           Humidity:
           {weatherData &&
-            weatherData.hourly.relative_humidity_2m[
-              Number(getCurrentHour())
-            ]}{" "}
+            weatherData.hourly.relative_humidity_2m[getCurrentHour() - 1]}
           %
         </h6>
       </div>
@@ -92,11 +107,20 @@ const Weather = () => {
         <TempChart data={weatherData} />
       </div>
 
-      <div class="nextDay1"></div>
-      <div class="nextDay2"></div>
-      <div class="nextDay3"></div>
-      <div class="nextDay4"></div>
-      <div class="nextDay5"></div>
+      {weatherData && (
+        <>
+          {[0, 24, 48, 72, 96].map((hour, index) => (
+            <div key={index} className={`nextDay${index + 1}`}>
+              {weatherData.hourly.time[hour].replace("T00:00", "")}
+              <div>
+                {weatherData &&
+                  handleIcon(weatherData.hourly.weather_code[12 + hour])}
+              </div>
+              <h1>{weatherData.hourly.temperature_2m[hour]}</h1>
+            </div>
+          ))}
+        </>
+      )}
     </div>
   );
 };
