@@ -10,22 +10,22 @@ const TempChart = (props) => {
 
     tempArr.forEach((temp, index) => {
       temperatureObjects.push({
-        time: timeArr[index],
+        time: timeArr[index].replace(),
         temperature_2m: temp,
       });
     });
   }
 
   const renderLineChart = (
-    <>
-      <h1 style={{ fontSize: "10px" }}></h1>
-      <LineChart width={1000} height={200} data={temperatureObjects}>
-        <Line type="monotone" dataKey="temperature_2m" stroke="#8884d8" />
-        <CartesianGrid stroke="#ccc" />
-        <XAxis dataKey="time" />
-        <YAxis />
+    <div style={{ height: "0vh" }}>
+      <h3 style={{ color: "white" }}>Temps</h3>
+      <LineChart width={1000} height={250} data={temperatureObjects}>
+        <Line type="monotone" dataKey="temperature_2m" stroke="white" />
+        <CartesianGrid stroke="white" />
+        <XAxis dataKey="time" stroke="white" />
+        <YAxis stroke="white" />
       </LineChart>
-    </>
+    </div>
   );
 
   return <div>{renderLineChart}</div>;

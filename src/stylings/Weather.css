@@ -1,20 +1,19 @@
 .wrapper {
   display: grid;
-  background-color: #eee;
   grid-template-areas:
     "date chart chart chart chart chart"
     "date chart chart chart chart chart "
     "date nextDay1 nextDay2 nextDay3 nextDay4 nextDay5";
   gap: 10px;
-  color: white;
+  color: #c0c0c0;
   padding: 10px;
-  background-color: #7286d3;
+  align-items: center;
+  place-items: center;
+  height: 100vh;
 }
 
 .wrapper > div {
-  background-color: #8ea7e9;
   text-align: center;
-  padding: 20px 0;
   font-size: 30px;
 }
 .date {
@@ -44,6 +43,11 @@
 }
 * {
   margin: 0px;
-
   font-family: sans-serif;
+}
+
+body {
+  background-image: url("../images/mnl.png");
+  background-size: cover;
+  /* Other styles */
 }
